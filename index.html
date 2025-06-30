@@ -242,7 +242,107 @@
       font-weight: 600;
       font-style: normal;
     }
+
+    /* Music Toggle Button Base Styles */
+    .music-toggle-btn {
+      background: none !important;
+      border: none !important;
+      cursor: pointer !important;
+      border-radius: 4px !important;
+      transition: all 0.2s ease !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: inherit !important;
+      text-decoration: none !important;
+      position: relative !important;
+    }
+
+    .music-toggle-btn:hover {
+      opacity: 0.8 !important;
+    }
+
+    .music-toggle-btn:focus {
+      outline: none !important;
+    }
+
+    .music-toggle-btn .music-icon {
+      width: 20px !important;
+      height: 20px !important;
+      transition: all 0.2s ease !important;
+      stroke: currentColor !important;
+    }
+
+    /* Ensure only one icon shows at a time */
+    .music-toggle-btn .music-icon.hidden {
+      display: none !important;
+    }
+
+    /* Desktop Music Button */
+    @media (min-width: 992px) {
+      .music-toggle-desktop {
+        color: #101828 !important;
+        margin: 0 12px !important;
+        padding: 10px 12px !important;
+        height: auto !important;
+        min-width: auto !important;
+        background: none !important;
+      }
+      
+      .music-toggle-desktop:hover {
+        color: #101828 !important;
+        text-decoration: none !important;
+        background-color: rgba(16, 24, 40, 0.1) !important;
+      }
+      
+      /* Hide mobile button on desktop */
+      .music-toggle-mobile {
+        display: none !important;
+      }
+    }
+
+    /* Tablet and Mobile Styles */
+    @media (max-width: 991px) {
+      /* Hide desktop button on tablet/mobile */
+      .music-toggle-desktop {
+        display: none !important;
+      }
+      
+      /* Position mobile button next to hamburger menu */
+      .music-toggle-mobile {
+        position: absolute !important;
+        top: 50% !important;
+        right: 60px !important;
+        transform: translateY(-50%) !important;
+        z-index: 1000 !important;
+        margin: 0 !important;
+        padding: 12px !important;
+        color: var(--orange) !important;
+        background: none !important;
+        width: 48px !important;
+        height: 48px !important;
+        border: none !important;
+      }
+      
+      .music-toggle-mobile:hover {
+        background-color: rgba(224, 79, 51, 0.1) !important;
+      }
+      
+      /* Ensure navbar container is relatively positioned */
+      .navbar-component {
+        position: relative !important;
+      }
+    }
+
+    /* Hide music button in mobile dropdown menu only */
+    .w-nav-overlay #music-toggle {
+      display: none !important;
+    }
   </style>
+  <!-- Background Music Audio Element -->
+  <audio id="background-music" loop preload="auto">
+    <source src="./src/WhispersOverClouds.mp3" type="audio/mpeg">
+  </audio>
 </head>
 
 <body class="body">
@@ -471,12 +571,34 @@
                   </div>
                 </div>
               </nav>
-            </div><a href="https://cryptofeline.github.io/itmt/#socials" class="uui-navbar02_link w-nav-link">Socials</a><a
+            </div><a href="https://cryptofeline.github.io/itmt/#socials" class="uui-navbar02_link w-nav-link">Socials</a>
+            <!-- Desktop Music Button -->
+            <button id="music-toggle-desktop" class="music-toggle-btn music-toggle-desktop" aria-label="Toggle background music">
+              <svg class="music-icon music-icon-playing" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19.07 4.93C20.9447 6.80528 21.9979 9.34832 21.9979 12C21.9979 14.6517 20.9447 17.1947 19.07 19.07M15.54 8.46C16.4774 9.39764 17.0039 10.6692 17.0039 12C17.0039 13.3308 16.4774 14.6024 15.54 15.54" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <svg class="music-icon music-icon-muted hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M23 9L17 15M17 9L23 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button><a
               href="https://t.me/+theOg2qBmUthYjdk" target="_blank" class="uui-button w-inline-block">
               <div>Join Us</div>
             </a>
           </div>
         </nav>
+        <!-- Mobile/Tablet Music Toggle Button - positioned outside nav -->
+        <button id="music-toggle" class="music-toggle-btn music-toggle-mobile" aria-label="Toggle background music">
+          <svg id="music-icon-playing" class="music-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M19.07 4.93C20.9447 6.80528 21.9979 9.34832 21.9979 12C21.9979 14.6517 20.9447 17.1947 19.07 19.07M15.54 8.46C16.4774 9.39764 17.0039 10.6692 17.0039 12C17.0039 13.3308 16.4774 14.6024 15.54 15.54" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <svg id="music-icon-muted" class="music-icon hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11 5L6 9H2V15H6L11 19V5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M23 9L17 15M17 9L23 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
         <div class="uui-navbar02_menu-button w-nav-button" style="-webkit-user-select: text;" aria-label="menu"
           role="button" tabindex="0" aria-controls="w-nav-overlay-0" aria-haspopup="menu" aria-expanded="false">
           <div class="menu-icon_component">
@@ -1083,9 +1205,8 @@
               </div>
             </div>
             <div id="w-node-_5191d374-c104-efd7-90ba-ac521f81d0cd-11601c02" class="uui-layout84_image-wrapper"><img
-                src="./src/6814e31d5d5d60bc29638190_p2e.webp" loading="lazy"
+                src="./src/img/p2e.webp" loading="lazy"
                 sizes="(max-width: 479px) 100vw, 436.4930725097656px" width="436.5" alt="iPhone mockup"
-                srcset="https://cdn.prod.website-files.com/680f433bf24d951011601ba4/6814e31d5d5d60bc29638190_p2e-p-500.webp 500w, https://cdn.prod.website-files.com/680f433bf24d951011601ba4/6814e31d5d5d60bc29638190_p2e-p-800.webp 800w, https://cdn.prod.website-files.com/680f433bf24d951011601ba4/6814e31d5d5d60bc29638190_p2e.webp 873w"
                 class="uui-layout84_image"></div>
             <div id="w-node-_5191d374-c104-efd7-90ba-ac521f81d0d0-11601c02" class="w-layout-grid uui-layout84_right">
               <div class="uui-layout84_item">
@@ -1378,6 +1499,195 @@
 
       // Update UI status
       document.getElementById("copy-status").textContent = "Copied!";
+    });
+  </script>
+  
+  <!-- Background Music Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const audio = document.getElementById('background-music');
+      const musicToggleMobile = document.getElementById('music-toggle');
+      const musicToggleDesktop = document.getElementById('music-toggle-desktop');
+      
+      // Mobile button icons
+      const iconPlayingMobile = document.getElementById('music-icon-playing');
+      const iconMutedMobile = document.getElementById('music-icon-muted');
+      
+      // Desktop button icons
+      const iconPlayingDesktop = musicToggleDesktop ? musicToggleDesktop.querySelector('.music-icon-playing') : null;
+      const iconMutedDesktop = musicToggleDesktop ? musicToggleDesktop.querySelector('.music-icon-muted') : null;
+      
+      let isPlaying = false;
+      let userHasInteracted = false;
+      
+      // Function to update icon display based on playing state
+      function updateIcon() {
+        // Update mobile icons
+        if (iconPlayingMobile && iconMutedMobile) {
+          if (isPlaying) {
+            iconPlayingMobile.style.display = 'block';
+            iconPlayingMobile.classList.remove('hidden');
+            iconMutedMobile.style.display = 'none';
+            iconMutedMobile.classList.add('hidden');
+          } else {
+            iconPlayingMobile.style.display = 'none';
+            iconPlayingMobile.classList.add('hidden');
+            iconMutedMobile.style.display = 'block';
+            iconMutedMobile.classList.remove('hidden');
+          }
+        }
+        
+        // Update desktop icons
+        if (iconPlayingDesktop && iconMutedDesktop) {
+          if (isPlaying) {
+            iconPlayingDesktop.style.display = 'block';
+            iconPlayingDesktop.classList.remove('hidden');
+            iconMutedDesktop.style.display = 'none';
+            iconMutedDesktop.classList.add('hidden');
+          } else {
+            iconPlayingDesktop.style.display = 'none';
+            iconPlayingDesktop.classList.add('hidden');
+            iconMutedDesktop.style.display = 'block';
+            iconMutedDesktop.classList.remove('hidden');
+          }
+        }
+      }
+      
+      // Function to toggle music
+      function toggleMusic() {
+        userHasInteracted = true;
+        if (isPlaying) {
+          // Currently playing, so pause it
+          audio.pause();
+          isPlaying = false;
+        } else {
+          // Currently not playing, so play it
+          audio.play().catch(e => {
+            console.log('Audio play failed:', e);
+            isPlaying = false;
+          });
+          isPlaying = true;
+        }
+        updateIcon();
+      }
+      
+      // Add click event listeners to both buttons
+      if (musicToggleMobile) {
+        musicToggleMobile.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleMusic();
+        });
+      }
+      
+      if (musicToggleDesktop) {
+        musicToggleDesktop.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleMusic();
+        });
+      }
+      
+      // Auto-play music when page loads (with user interaction fallback)
+      function attemptAutoplay() {
+        audio.play().then(() => {
+          isPlaying = true;
+          updateIcon();
+          console.log('Autoplay successful');
+        }).catch(e => {
+          // Autoplay failed, show muted icon and wait for user interaction
+          console.log('Autoplay failed, waiting for user interaction');
+          isPlaying = false;
+          updateIcon();
+          
+          // Try to play on first user interaction anywhere on the page
+          const firstInteraction = () => {
+            if (!userHasInteracted) {
+              audio.play().then(() => {
+                isPlaying = true;
+                updateIcon();
+                console.log('Music started after user interaction');
+              }).catch(err => {
+                console.log('Audio play still failed:', err);
+                isPlaying = false;
+                updateIcon();
+              });
+            }
+            document.removeEventListener('click', firstInteraction);
+            document.removeEventListener('touchstart', firstInteraction);
+            document.removeEventListener('keydown', firstInteraction);
+          };
+          
+          document.addEventListener('click', firstInteraction);
+          document.addEventListener('touchstart', firstInteraction);
+          document.addEventListener('keydown', firstInteraction);
+        });
+      }
+      
+      // Set volume to a comfortable level
+      audio.volume = 0.5;
+      
+      // Initialize with playing icon (optimistic autoplay approach)
+      isPlaying = true;
+      updateIcon();
+      
+      // Attempt autoplay after a short delay
+      setTimeout(attemptAutoplay, 1000);
+      
+      // Handle audio events to keep state in sync
+      audio.addEventListener('play', () => {
+        isPlaying = true;
+        updateIcon();
+        console.log('Audio started playing');
+      });
+      
+      audio.addEventListener('pause', () => {
+        isPlaying = false;
+        updateIcon();
+        console.log('Audio paused');
+      });
+      
+      audio.addEventListener('ended', () => {
+        // This shouldn't happen with loop=true, but just in case
+        isPlaying = false;
+        updateIcon();
+        console.log('Audio ended');
+      });
+      
+      // Prevent music from stopping due to hash changes or banner interactions
+      window.addEventListener('hashchange', function(e) {
+        // Don't stop music on hash changes
+        if (isPlaying && audio.paused) {
+          setTimeout(() => {
+            audio.play().catch(e => console.log('Resume after hash change failed:', e));
+          }, 100);
+        }
+      });
+      
+      // Prevent banner close button from stopping music
+      document.addEventListener('click', function(e) {
+        // Check if the clicked element is a banner close button
+        const isCloseButton = e.target.closest('[data-w-id="9633204d-67ac-0c74-396f-14543686c380"]') || 
+                             e.target.closest('.a-banner-icon-button');
+        
+        if (isCloseButton) {
+          // Don't let banner close affect music playback
+          setTimeout(() => {
+            if (isPlaying && audio.paused) {
+              audio.play().catch(e => console.log('Resume after banner close failed:', e));
+            }
+          }, 100);
+        }
+      });
+      
+      // Debug: Log button visibility and state
+      setTimeout(() => {
+        console.log('Music buttons initialized:');
+        console.log('Mobile button found:', !!musicToggleMobile);
+        console.log('Desktop button found:', !!musicToggleDesktop);
+        console.log('Initial playing state:', isPlaying);
+        console.log('Audio paused:', audio.paused);
+      }, 2000);
     });
   </script>
   <script src="chrome-extension://jdepgjdjpmpjljfdcmnbjmafkbckkhko/js/functions.js" type="text/javascript"></script>
