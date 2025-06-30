@@ -340,7 +340,7 @@
     }
   </style>
   <!-- Background Music Audio Element -->
-  <audio id="background-music" loop preload="auto">
+  <audio id="background-music" loop preload="auto" autoplay>
     <source src="./src/WhispersOverClouds.mp3" type="audio/mpeg">
   </audio>
 </head>
@@ -1504,6 +1504,18 @@
   
   <!-- Background Music Script -->
   <script>
+    // Try to start music as early as possible
+    function tryEarlyMusic() {
+      const audio = document.getElementById('background-music');
+      if (audio) {
+        audio.volume = 0.5;
+        audio.play().catch(e => console.log('Early play failed:', e));
+      }
+    }
+    
+    // Try immediately when script loads
+    setTimeout(tryEarlyMusic, 100);
+    
     document.addEventListener('DOMContentLoaded', function() {
       const audio = document.getElementById('background-music');
       const musicToggleMobile = document.getElementById('music-toggle');
@@ -1595,14 +1607,11 @@
           updateIcon();
           console.log('Autoplay successful');
         }).catch(e => {
-          // Autoplay failed, show muted icon and wait for user interaction
-          console.log('Autoplay failed, waiting for user interaction');
-          isPlaying = false;
-          updateIcon();
-          
-          // Try to play on first user interaction anywhere on the page
-          const firstInteraction = () => {
+          console.log('Autoplay failed, will start on user interaction');
+          // Set up user interaction listeners for immediate music start
+          const startMusic = () => {
             if (!userHasInteracted) {
+              userHasInteracted = true;
               audio.play().then(() => {
                 isPlaying = true;
                 updateIcon();
@@ -1613,25 +1622,37 @@
                 updateIcon();
               });
             }
-            document.removeEventListener('click', firstInteraction);
-            document.removeEventListener('touchstart', firstInteraction);
-            document.removeEventListener('keydown', firstInteraction);
+            // Remove listeners after first use
+            document.removeEventListener('click', startMusic);
+            document.removeEventListener('touchstart', startMusic);
+            document.removeEventListener('keydown', startMusic);
+            document.removeEventListener('mousemove', startMusic);
+            document.removeEventListener('scroll', startMusic);
           };
           
-          document.addEventListener('click', firstInteraction);
-          document.addEventListener('touchstart', firstInteraction);
-          document.addEventListener('keydown', firstInteraction);
+          // Listen for any user interaction
+          document.addEventListener('click', startMusic);
+          document.addEventListener('touchstart', startMusic);
+          document.addEventListener('keydown', startMusic);
+          document.addEventListener('mousemove', startMusic);
+          document.addEventListener('scroll', startMusic);
         });
       }
       
       // Set volume to a comfortable level
       audio.volume = 0.5;
       
+      // Try multiple immediate autoplay attempts
+      audio.play().catch(e => console.log('Immediate play failed:', e));
+      
       // Initialize with playing icon (optimistic autoplay approach)
       isPlaying = true;
       updateIcon();
       
-      // Attempt autoplay after a short delay
+      // Attempt autoplay immediately and then with multiple delays
+      attemptAutoplay();
+      setTimeout(attemptAutoplay, 100);
+      setTimeout(attemptAutoplay, 500);
       setTimeout(attemptAutoplay, 1000);
       
       // Handle audio events to keep state in sync
